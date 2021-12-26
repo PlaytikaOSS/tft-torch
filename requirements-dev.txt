@@ -1,0 +1,12 @@
+flake8==3.9.2
+ipython==7.23.1
+nbsphinx==0.8.4
+pandoc==1.0.2
+pre-commit==2.12.1
+pytest==6.2.4
+setuptools==52.0.0
+sphinx==4.0.0
+sphinx-rtd-theme==0.5.2
+wheel==0.36.2
+build
+recommonmark
