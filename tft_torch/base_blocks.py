@@ -3,8 +3,19 @@ from torch import nn
 
 class TimeDistributed(nn.Module):
     """
-    Takes any module and stacks the time dimension with the batch dimension of inputs before applying the module
-    From: https://discuss.pytorch.org/t/any-pytorch-function-can-work-as-keras-timedistributed/1346/4
+    This module can wrap any given module and stacks the time dimension with the batch dimension of the inputs
+    before applying the module.
+    Borrowed from this fruitful `discussion thread
+    <https://discuss.pytorch.org/t/any-pytorch-function-can-work-as-keras-timedistributed/1346/4>`_.
+
+    Parameters
+    ----------
+    module : nn.Module
+        The wrapped module.
+    batch_first: bool
+        A boolean indicating whether the batch dimension is expected to be the first dimension of the input or not.
+    return_reshaped: bool
+        A boolean indicating whether to return the output in the corresponding original shape or not.
     """
 
     def __init__(self, module: nn.Module, batch_first: bool = True, return_reshaped: bool = True):

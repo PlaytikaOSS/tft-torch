@@ -1,6 +1,6 @@
 import copy
 import math
-from typing import List, Dict, Tuple, Union
+from typing import List, Dict, Tuple, Optional
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -10,15 +10,21 @@ from tft_torch.base_blocks import TimeDistributed
 
 class GatedLinearUnit(nn.Module):
     """
-    aka GLU - Formulated in
-    Dauphin, Yann N., et al. "Language modeling with gated convolutional networks."
-    International conference on machine learning. PMLR, 2017.
+    This module is also known as  **GLU** - Formulated in:
+    `Dauphin, Yann N., et al. "Language modeling with gated convolutional networks."
+    International conference on machine learning. PMLR, 2017
+    <https://arxiv.org/abs/1612.08083>`_.
 
-    The output of the layer is a linear projection (X * W + b) modulated by the gates sigmoid(X * V + c).
-    These gates multiply each element of the matrix X * W +b and control the information passed on in the hierarchy.
+    The output of the layer is a linear projection (X * W + b) modulated by the gates **sigmoid** (X * V + c).
+    These gates multiply each element of the matrix X * W + b and control the information passed on in the hierarchy.
     This unit is a simplified gating mechanism for non-deterministic gates that reduce the vanishing gradient problem,
     by having linear units coupled to the gates. This retains the non-linear capabilities of the layer while allowing
     the gradient to propagate through the linear unit without scaling.
+
+    Parameters
+    ----------
+    input_dim: int
+        The embedding size of the input.
     """
 
     def __init__(self, input_dim: int):
@@ -37,18 +43,33 @@ class GatedLinearUnit(nn.Module):
 
 class GatedResidualNetwork(nn.Module):
     """
-    This module, known as GRN, takes in a primary input (x) and an optional context vector (c).
-    It uses a GatedLinearUnit for controlling the extent to which the module will contribute to the original input (x)-
-    potentially skipping over the layer entirely as the GLU outputs could be all close to zero, by that surpressing the
+    This module, known as **GRN**, takes in a primary input (x) and an optional context vector (c).
+    It uses a ``GatedLinearUnit`` for controlling the extent to which the module will contribute to the original input
+    (x), potentially skipping over the layer entirely as the GLU outputs could be all close to zero, by that suppressing
     the non-linear contribution.
     In cases where no context vector is used, the GRN simply treats the context input as zero.
     During training, dropout is applied before the gating layer.
+
+    Parameters
+    ----------
+    input_dim: int
+        The embedding width/dimension of the input.
+    hidden_dim: int
+        The intermediate embedding width.
+    output_dim: int
+        The embedding width of the output tensors.
+    dropout: Optional[float]
+        The dropout rate associated with the component.
+    context_dim: Optional[int]
+        The embedding width of the context signal expected to be fed as an auxiliary input to this component.
+    batch_first: Optional[bool]
+        A boolean indicating whether the batch dimension is expected to be the first dimension of the input or not.
     """
 
     def __init__(self, input_dim: int, hidden_dim: int, output_dim: int,
-                 dropout: float = 0.05,
-                 context_dim=None,
-                 batch_first=True):
+                 dropout: Optional[float] = 0.05,
+                 context_dim: Optional[int] = None,
+                 batch_first: Optional[bool] = True):
         super(GatedResidualNetwork, self).__init__()
         self.input_dim = input_dim
         self.output_dim = output_dim
@@ -127,16 +148,33 @@ class GatedResidualNetwork(nn.Module):
 
 class VariableSelectionNetwork(nn.Module):
     """
-    This module is designed to handle the fact that the relevance and specific contribution of each input variable
-    to the the output is typically unknown. This module enables instance-wise variable selection, and is applied to
-    both static covariates and time-dependent covariates.
+    This module is designed to handle the fact that the relevant and specific contribution of each input variable
+    to the  output is typically unknown. This module enables instance-wise variable selection, and is applied to
+    both the static covariates and time-dependent covariates.
 
-    Beyond providing insights into which variables are most significant for the prediction problem, variable selection
-    also allows the model to remove any unnecessary noisy inputs which could negatively impact performance.
+    Beyond providing insights into which variables are the most significant oones for the prediction problem,
+    variable selection also allows the model to remove any unnecessary noisy inputs which could negatively impact
+    performance.
 
+    Parameters
+    ----------
+    input_dim: int
+        The attribute/embedding dimension of the input, associated with the ``state_size`` of th model.
+    num_inputs: int
+        The quantity of input variables, including both numeric and categorical inputs for the relevant channel.
+    hidden_dim: int
+        The embedding width of the output.
+    dropout: float
+        The dropout rate associated with ``GatedResidualNetwork`` objects composing this object.
+    context_dim: Optional[int]
+        The embedding width of the context signal expected to be fed as an auxiliary input to this component.
+    batch_first: Optional[bool]
+        A boolean indicating whether the batch dimension is expected to be the first dimension of the input or not.
     """
 
-    def __init__(self, input_dim, num_inputs, hidden_dim, dropout, context_dim=None, batch_first: bool = True):
+    def __init__(self, input_dim: int, num_inputs: int, hidden_dim: int, dropout: float,
+                 context_dim: Optional[int] = None,
+                 batch_first: Optional[bool] = True):
         super(VariableSelectionNetwork, self).__init__()
 
         self.hidden_dim = hidden_dim
@@ -214,10 +252,23 @@ class InputChannelEmbedding(nn.Module):
     tensors.
     It holds a NumericInputTransformation module for handling the embedding of the numeric inputs,
     and a CategoricalInputTransformation module for handling the embedding of the categorical inputs.
+
+    Parameters
+    ----------
+    state_size : int
+        The state size of the model, which determines the embedding dimension/width of each input variable.
+    num_numeric : int
+        The quantity of numeric input variables associated with the input channel.
+    num_categorical : int
+        The quantity of categorical input variables associated with the input channel.
+    categorical_cardinalities: List[int]
+        The quantity of categories associated with each of the categorical input variables.
+    time_distribute: Optional[bool]
+        A boolean indicating whether to wrap the composing transformations using the ``TimeDistributed`` module.
     """
 
     def __init__(self, state_size: int, num_numeric: int, num_categorical: int, categorical_cardinalities: List[int],
-                 time_distribute: bool = False):
+                 time_distribute: Optional[bool] = False):
         super(InputChannelEmbedding, self).__init__()
 
         self.state_size = state_size
@@ -271,6 +322,13 @@ class NumericInputTransformation(nn.Module):
     Each input variable will be projected using a dedicated linear layer to a vector with width state_size.
     The result of applying this module is a list, with length num_inputs, that contains the embedding of each input
     variable for all the observations and time steps.
+
+    Parameters
+    ----------
+    num_inputs : int
+        The quantity of numeric input variables associated with this module.
+    state_size : int
+        The state size of the model, which determines the embedding dimension/width.
     """
 
     def __init__(self, num_inputs: int, state_size: int):
@@ -298,6 +356,15 @@ class CategoricalInputTransformation(nn.Module):
     Each input variable will be projected using a dedicated embedding layer to a vector with width state_size.
     The result of applying this module is a list, with length num_inputs, that contains the embedding of each input
     variable for all the observations and time steps.
+
+    Parameters
+    ----------
+    num_inputs : int
+        The quantity of categorical input variables associated with this module.
+    state_size : int
+        The state size of the model, which determines the embedding dimension/width.
+    cardinalities: List[int]
+        The quantity of categories associated with each of the input variables.
     """
 
     def __init__(self, num_inputs: int, state_size: int, cardinalities: List[int]):
@@ -324,14 +391,21 @@ class CategoricalInputTransformation(nn.Module):
 class GateAddNorm(nn.Module):
     """
     This module encapsulates an operation performed multiple times across the TemporalFusionTransformer model.
-    The composite opertaion includes:
-    a. dropout layer
-    b. gating using a GatedLinearUnit
-    c. residual connection to an "earlier" signal from the forward pass of the parent model
-    d. layer normalization
+    The composite operation includes:
+    a. A *Dropout* layer.
+    b. Gating using a ``GatedLinearUnit``.
+    c. A residual connection to an "earlier" signal from the forward pass of the parent model.
+    d. Layer normalization.
+
+    Parameters
+    ----------
+    input_dim: int
+        The dimension associated with the expected input of this module.
+    dropout: Optional[float]
+        The dropout rate associated with the component.
     """
 
-    def __init__(self, input_dim: int, dropout: float = None):
+    def __init__(self, input_dim: int, dropout: Optional[float] = None):
         super(GateAddNorm, self).__init__()
         self.dropout_rate = dropout
         if dropout:
@@ -362,6 +436,13 @@ class InterpretableMultiHeadAttention(nn.Module):
     input features which can be interpreted as  a simple ensemble over attention weights into a combined matrix, which,
     compared to the original multi-head attention matrix, yields an increased representation capacity in an efficient
     way.
+
+    Parameters
+    ----------
+    embed_dim: int
+        The dimensions associated with the ``state_size`` of th model, corresponding to the input as well as the output.
+    num_heads: int
+        The number of attention heads composing the Multi-head attention component.
     """
 
     def __init__(self, embed_dim: int, num_heads: int):
@@ -439,6 +520,22 @@ class InterpretableMultiHeadAttention(nn.Module):
 
 
 class TemporalFusionTransformer(nn.Module):
+    """
+    This class implements the Temporal Fusion Transformer model described in the paper
+    `Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting
+    <https://arxiv.org/abs/1912.09363>`_.
+
+    Parameters
+    ----------
+    config: DictConfig
+        A mapping describing both the expected structure of the input of the model, and the architectural specification
+        of the model.
+        This mapping should include a key named ``data_props`` in which the dimensions and cardinalities (where the
+        inputs are categorical) are specified. Moreover, the configuration mapping should contain a key named ``model``,
+        specifying ``attention_heads`` , ``dropout`` , ``lstm_layers`` , ``output_quantiles`` and ``state_size`` ,
+        which are required for creating the model.
+    """
+
     def __init__(self, config: DictConfig):
         super().__init__()
 

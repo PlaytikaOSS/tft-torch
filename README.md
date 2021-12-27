@@ -10,7 +10,6 @@ tft-torch
 [comment]: <> (Modify also LICENSE.rst if you change the license)
 ![alt text](https://img.shields.io/badge/build-passing-brightgreen)
 ![alt text](https://img.shields.io/badge/docs-passing-brightgreen)
-![alt text](https://img.shields.io/badge/coverage-95%25-green)
 ![alt text](https://img.shields.io/badge/version-0.0.1-blue)
 ![alt text](https://img.shields.io/badge/license-MIT-blue)
 
@@ -105,8 +104,6 @@ $ make html
 
 Run tests
 ---------
-
-<span style="color:red">Still need to take care of this</span>.
 
 Tests can be executed with ``pytest`` running the following commands:
 

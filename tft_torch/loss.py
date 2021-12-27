@@ -2,21 +2,28 @@ from typing import Tuple
 import torch
 
 
-def compute_quantile_loss_instance_wise(outputs: torch.tensor,
-                                        targets: torch.tensor,
-                                        desired_quantiles: torch.tensor) -> torch.Tensor:
+def compute_quantile_loss_instance_wise(outputs: torch.Tensor,
+                                        targets: torch.Tensor,
+                                        desired_quantiles: torch.Tensor) -> torch.Tensor:
     """
     This function compute the quantile loss separately for each sample,time-step,quantile.
 
-    Args:
-        outputs: the outputs of the model [num_samples x num_horizons x num_quantiles]
-        targets: the observed target for each horizon [num_samples x num_horizons]
-        desired_quantiles: a tensor representing the desired quantiles, of shape (num_quantiles,)
+    Parameters
+    ----------
+    outputs: torch.Tensor
+        The outputs of the model [num_samples x num_horizons x num_quantiles].
+    targets: torch.Tensor
+        The observed target for each horizon [num_samples x num_horizons].
+    desired_quantiles: torch.Tensor
+        A tensor representing the desired quantiles, of shape (num_quantiles,)
 
-    Returns:
-        losses_array: a tensor [num_samples x num_horizons x num_quantiles] containing the quantile loss for each
-            sample,time-step,quantile
+    Returns
+    -------
+    losses_array: torch.Tensor
+        a tensor [num_samples x num_horizons x num_quantiles] containing the quantile loss for each sample,time-step and
+        quantile.
     """
+
     # compute the actual error between the observed target and each predicted quantile
     errors = targets.unsqueeze(-1) - outputs
     # Dimensions:
@@ -30,22 +37,30 @@ def compute_quantile_loss_instance_wise(outputs: torch.tensor,
     return losses_array
 
 
-def get_quantiles_loss_and_q_risk(outputs: torch.tensor,
-                                  targets: torch.tensor,
-                                  desired_quantiles: torch.tensor) -> Tuple[torch.tensor, ...]:
+def get_quantiles_loss_and_q_risk(outputs: torch.Tensor,
+                                  targets: torch.Tensor,
+                                  desired_quantiles: torch.Tensor) -> Tuple[torch.Tensor, ...]:
     """
     This function computes quantile loss and q-risk metric.
 
-    Args:
-        outputs: the outputs of the model [num_samples x num_horizons x num_quantiles]
-        targets: the observed target for each horizon [num_samples x num_horizons]
-        desired_quantiles: a tensor representing the desired quantiles, of shape (num_quantiles,)
+    Parameters
+    ----------
+    outputs: torch.Tensor
+        The outputs of the model [num_samples x num_horizons x num_quantiles].
+    targets: torch.Tensor
+        The observed target for each horizon [num_samples x num_horizons].
+    desired_quantiles: torch.Tensor
+        a tensor representing the desired quantiles, of shape (num_quantiles,).
 
-    Returns:
-        q_loss: a scalar representing the quantile loss across all samples,horizons and quantiles
-        q_risk: a tensor (shape=(num_quantiles,)) with q-risk metric for each quantile separately
-        losses_array: a tensor [num_samples x num_horizons x num_quantiles] containing the quantile loss for each
-            sample,time-step,quantile
+    Returns
+    ----------
+    q_loss: torch.Tensor
+        a scalar representing the quantile loss across all samples,horizons and quantiles.
+    q_risk: torch.Tensor
+        a tensor (shape=(num_quantiles,)) with q-risk metric for each quantile separately.
+    losses_array: torch.Tensor
+        a tensor [num_samples x num_horizons x num_quantiles] containing the quantile loss for each
+        sample,time-step and quantile.
 
     """
     losses_array = compute_quantile_loss_instance_wise(outputs=outputs,

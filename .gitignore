@@ -41,6 +41,7 @@ build/*
 dist/*
 sdist/*
 docs/src/build/*
+docs/build/*
 cover/*
 MANIFEST
 

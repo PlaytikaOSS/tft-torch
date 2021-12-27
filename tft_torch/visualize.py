@@ -23,7 +23,7 @@ def aggregate_weights(output_arr: np.ndarray,
     Parameters
     ----------
     output_arr: np.ndarray
-        A 2D or 3D array containing the selection weights output by the model. A 3D tensor will implies selection
+        A 2D or 3D array containing the selection weights output by the model. A 3D tensor will imply selection
         weights associated with temporal inputs.
     prctiles: List[float]
         A list of percentiles according to which the distribution of selection weights will be described.
@@ -122,9 +122,9 @@ def display_attention_scores(attention_scores: np.ndarray,
     """
 
     # if any of ``horizons`` or ``prctiles`` is provided as int, transform into a list.
-    if isinstance(horizons, int):
+    if not isinstance(horizons, list):
         horizons = [horizons]
-    if isinstance(prctiles, float):
+    if not isinstance(prctiles, list):
         prctiles = [prctiles]
 
     # make sure only maximum one of ``horizons`` and ``prctiles`` has more than one element.
