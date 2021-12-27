@@ -1,4 +1,5 @@
 from typing import Dict, List, Union, Callable, Optional
+from IPython.display import display
 import numpy as np
 import pandas as pd
 from matplotlib import rcParams
