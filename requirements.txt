@@ -1,0 +1,6 @@
+omegaconf
+torch>=1.6.0
+numpy
+pandas
+scikit-learn
+matplotlib
