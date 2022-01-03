@@ -854,7 +854,7 @@ class TemporalFusionTransformer(nn.Module):
     def apply_self_attention(self, enriched_sequence: torch.tensor,
                              num_historical_steps: int,
                              num_future_steps: int):
-        # create a mask - so that future steps will be exposed (able to attent) only to preceding steps
+        # create a mask - so that future steps will be exposed (able to attend) only to preceding steps
         output_sequence_length = num_future_steps - self.target_window_start_idx
         mask = torch.cat([torch.zeros(output_sequence_length,
                                       num_historical_steps + self.target_window_start_idx,
