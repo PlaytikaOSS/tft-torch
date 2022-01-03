@@ -64,6 +64,7 @@ This repository suggests an implementation of a model based on the work presente
       primaryClass={stat.ML}
 }
 ```
+Some parts of the implementation rely on [mattsherar](https://github.com/mattsherar)'s TFT implementation, available as part of the [Temporal_Fusion_Transform](https://github.com/mattsherar/Temporal_Fusion_Transform) repository.
 
 [1]: https://arxiv.org/abs/1912.09363
 
