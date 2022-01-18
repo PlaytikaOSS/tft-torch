@@ -98,7 +98,6 @@ To create the HTML documentation run the following commands:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd docs
-$ sphinx-apidoc -o source/ ../tft_torch
 $ make clean
 $ make html
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
