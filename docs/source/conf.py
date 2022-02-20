@@ -62,3 +62,4 @@ html_static_path = ['_static']
 modindex_common_prefix = ['tft-torch.']
 
 nbsphinx_allow_errors = True
+
