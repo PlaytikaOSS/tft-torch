@@ -87,14 +87,14 @@ $ pip install -r requirements.txt      # install dependencies
 $ pip install -r requirements-dev.txt  # install developer-dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To create the file ``*.whl`` for the installation with ``pip`` run the following command (at the root of the
+For creating the "*pip-installable*" ``*.whl`` file, run the following command (at the root of the
 repository):
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python -m build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To create the HTML documentation run the following commands:
+For creating the HTML documentation of the project, run the following commands:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd docs

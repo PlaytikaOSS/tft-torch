@@ -42,14 +42,14 @@ You can install the library and the dependencies from the source code with one o
 
 .. _GitHub: https://github.com/PlaytikaResearch/tft-torch
 
-To create the file ``*.whl`` for the installation with ``pip`` run the following command (at the root of the
+For creating the "*pip-installable*" ``*.whl`` file, run the following command (at the root of the
 repository):
 
 .. code:: console
 
    $ python -m build
 
-To create the HTML documentation run the following commands:
+For creating the HTML documentation of the project, run the following commands:
 
 .. code:: console
 
