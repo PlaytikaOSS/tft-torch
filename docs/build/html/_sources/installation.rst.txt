@@ -20,7 +20,7 @@ The latest release is version ``0.0.1``.
 
 The command above will automatically install all the dependencies listed in ``requirements.txt``.
 
-.. _PyPI:  https://pypi.org/project/tft-torch/
+.. _PyPI:  https://pypi.org/project/tft-torch
 
 Info for developers
 -------------------

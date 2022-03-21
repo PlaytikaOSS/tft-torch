@@ -22,33 +22,28 @@ This library works for Python 3.7 and higher and PyTorch 1.6.0 and higher.
 
 Installation
 ------------
-This library is distributed on [PyPi](missing_url) and can be installed using ``pip``.
-<span style="color:red">Still need to take care of this</span>.
+This library is distributed on [PyPi](https://pypi.org/project/tft-torch) and can be installed using ``pip``.
 
 ~~~~~~~~~~~~~~~~~~~~~~
 $ pip install tft-torch 
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The command above will automatically install all the required dependencies. Please visit the
-[installation](needs_to_be_fixed) page for more details.
-
-<span style="color:red">Still need to take care of this</span>.
+[installation](https://playtikaresearch.github.io/tft-torch/build/html/installation.html) page for more details.
 
 
 Getting started
 ---------------
-Check out the tutorial **place link** for a demonstration how to use the library.
-<span style="color:red">Still need to take care of this</span>.
+Check out the [tutorials](https://playtikaresearch.github.io/tft-torch/build/html/tutorials.html) for a demonstration
+how to use the library.
 
 
 Documentation
 -------------
 For more information, refer to our
-[blogpost](broken_link)
+**<ins>blogpost</ins>** (link to follow soon)
 and
-[complete documentation](broken_link).
-
-
+[complete documentation](https://playtikaresearch.github.io/tft-torch).
 
 # Reference
 
@@ -64,7 +59,9 @@ This repository suggests an implementation of a model based on the work presente
       primaryClass={stat.ML}
 }
 ```
-Some parts of the implementation rely on [mattsherar](https://github.com/mattsherar)'s TFT implementation, available as part of the [Temporal_Fusion_Transform](https://github.com/mattsherar/Temporal_Fusion_Transform) repository.
+
+Some parts of the implementation rely on [mattsherar](https://github.com/mattsherar)'s TFT implementation, available as
+part of the [Temporal_Fusion_Transform](https://github.com/mattsherar/Temporal_Fusion_Transform) repository.
 
 [1]: https://arxiv.org/abs/1912.09363
 
@@ -87,8 +84,7 @@ $ pip install -r requirements.txt      # install dependencies
 $ pip install -r requirements-dev.txt  # install developer-dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For creating the "*pip-installable*" ``*.whl`` file, run the following command (at the root of the
-repository):
+For creating the "*pip-installable*" ``*.whl`` file, run the following command (at the root of the repository):
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python -m build
@@ -113,8 +109,6 @@ $ pytest                                      # run all tests
 $ pytest test_testmodule.py                   # run all tests within a module
 $ pytest test_testmodule.py -k test_testname  # run only 1 test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 License
 -------
