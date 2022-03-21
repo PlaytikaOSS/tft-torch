@@ -8,8 +8,8 @@
    :target: https://img.shields.io/badge/docs-passing-brightgreen
    :alt: Docs Status
 
-.. image:: https://img.shields.io/badge/version-0.0.1-blue
-   :target: https://img.shields.io/badge/version-0.0.1-blue
+.. image:: https://img.shields.io/badge/version-0.0.3-blue
+   :target: https://img.shields.io/badge/version-0.0.3-blue
    :alt: Development Status
 
 .. image:: https://img.shields.io/badge/license-MIT-blue

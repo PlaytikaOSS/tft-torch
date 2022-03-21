@@ -19,3 +19,6 @@ the implemented model.
 .. note::
     tft-torch is a python library that can be directly used by data scientists when
     imported in  ``Jupyter Notebook`` or ``Python`` projects.
+
+For more information, refer to our
+**blogpost** (link to follow soon).

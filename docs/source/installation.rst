@@ -12,7 +12,7 @@ Latest release
 This library is distributed on PyPI_ and
 can be installed with ``pip``.
 
-The latest release is version ``0.0.1``.
+The latest release is version ``0.0.3``.
 
 .. code:: console
 
