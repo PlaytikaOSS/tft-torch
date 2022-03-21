@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7]
+        python-version: [ 3.7 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -36,6 +36,7 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
           # run pre-commit hooks
+          git config --global url."https://github.com/".insteadOf git://github.com/
           pre-commit
       - name: Run tests
         run: |
