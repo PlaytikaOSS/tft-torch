@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>tft_torch.visualize module &mdash; tft-torch 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Help" href="help.html" />
+    <link rel="prev" title="tft_torch.base_blocks module" href="tft_torch.base_blocks.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> tft-torch
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">tft-torch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">tft-torch Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tft_torch.tft.html">tft_torch.tft module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tft_torch.loss.html">tft_torch.loss module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tft_torch.base_blocks.html">tft_torch.base_blocks module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">tft_torch.visualize module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tft-torch</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">tft-torch Modules</a> &raquo;</li>
+        
+      <li>tft_torch.visualize module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/tft_torch.visualize.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="tft-torch-visualize-module">
+<h1>tft_torch.visualize module<a class="headerlink" href="#tft-torch-visualize-module" title="Permalink to this headline">¶</a></h1>
+<p>Implements functional utilities which are helpful for visualizing the model outputs, both on a dataset level, and sample-wise</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tft_torch.visualize.aggregate_weights">
+<span class="sig-prename descclassname"><span class="pre">tft_torch.visualize.</span></span><span class="sig-name descname"><span class="pre">aggregate_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_arr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prctiles</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feat_names</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#tft_torch.visualize.aggregate_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a utility function for aggregating selection weights for a set (array) of observations,
+whether these selection weights are associated with the static input attributes, or with a set of temporal selection
+weights.
+The aggregation of the weights is performed through the computation of several percentiles (provided by the caller)
+for describing the distribution of the weights, for each attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_arr</strong> (<em>np.ndarray</em>) – A 2D or 3D array containing the selection weights output by the model. A 3D tensor will imply selection
+weights associated with temporal inputs.</p></li>
+<li><p><strong>prctiles</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – A list of percentiles according to which the distribution of selection weights will be described.</p></li>
+<li><p><strong>feat_names</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of strings associated with the relevant attributes (according to the their order).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>agg_df</strong> – A pandas dataframe, indexed with the relevant feature names, containing the aggregation of selection weights.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tft_torch.visualize.display_selection_weights_stats">
+<span class="sig-prename descclassname"><span class="pre">tft_torch.visualize.</span></span><span class="sig-name descname"><span class="pre">display_selection_weights_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prctiles</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tft_torch.visualize.display_selection_weights_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a utility function for displaying the selection weights statistics of multiple input channels according
+to the outputs provided by the model for a set of input observations.
+It requires a mapping which specifies which output key corresponds to each input channel, and the associated list
+of attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outputs_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>,</em><em>np.ndarray</em><em>]</em>) – A dictionary of numpy arrays containing the outputs of the model for a set of observations.</p></li>
+<li><p><strong>prctiles</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – A list of percentiles according to which the distribution of selection weights will be described.</p></li>
+<li><p><strong>mapping</strong> (<em>Dict</em>) – A dictionary specifying the output key corresponding to which input channel and the associated feature names.</p></li>
+<li><p><strong>sort_by</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – The percentile according to which the weights statistics will be sorted before displaying (Must be included as
+part of <code class="docutils literal notranslate"><span class="pre">prctiles</span></code>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tft_torch.visualize.display_attention_scores">
+<span class="sig-prename descclassname"><span class="pre">tft_torch.visualize.</span></span><span class="sig-name descname"><span class="pre">display_attention_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attention_scores</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizons</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prctiles</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Units'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tft_torch.visualize.display_attention_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a utility function for displaying the statistics of attention scores according
+to the outputs provided by the model for a set of input observations.
+The statistics of the scores will be described using specified percentiles, and for specified horizons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attention_scores</strong> (<em>np.ndarray</em>) – A numpy array containing the attention scores for the relevant dataset.</p></li>
+<li><p><strong>horizons</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em>) – A list or a single horizon, specified in time-steps units, for which the statistics will be computed.
+If more than one horizon was configured, then only a single percentile computation will be allowed.</p></li>
+<li><p><strong>prctiles</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em>) – A list or a single percentile to compute as a distribution describer for the scores.
+If more than percentile was configured, then only a single horizon will be allowed.</p></li>
+<li><p><strong>unit</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The units associated with the time-steps. This variable is used for labeling the corresponding axes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tft_torch.visualize.display_target_trajectory">
+<span class="sig-prename descclassname"><span class="pre">tft_torch.visualize.</span></span><span class="sig-name descname"><span class="pre">display_target_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_history</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_future</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_preds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_quantiles</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Units'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tft_torch.visualize.display_target_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a utility function for displaying, on a single observation level,
+the historical trajectory of the target variable, together with its future values, and the corresponding quantiles
+predicted by the model for each future time-step.
+In some cases, the target signal is transformed prior to training. For such cases, in order to allow visualization
+in the original scale of the target signal, a transformation function can be provided, for transforming the provided
+signals to the original scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal_history</strong> (<em>np.ndarray</em>) – A numpy array containing the historical values of the target signal.</p></li>
+<li><p><strong>signal_future</strong> (<em>np.ndarray</em>) – A numpy array containing the future values of the target signal (corresponding to the “labels”).</p></li>
+<li><p><strong>model_preds</strong> (<em>np.ndarray</em>) – A numpy array containing the predicted values by the model for each quantile.</p></li>
+<li><p><strong>observation_index</strong> (<em>int</em>) – The index corresponding to the observation for which the visualization will be generated.</p></li>
+<li><p><strong>model_quantiles</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – The list of quantiles configured in the trained model associated with the provided predictions.</p></li>
+<li><p><strong>transformation</strong> (<em>Callable</em>) – If provided, the function will be treated as a transformation, that will be applied to the provided signal
+before creating the visualization.</p></li>
+<li><p><strong>unit</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The units associated with the time-steps. This variable is used for labeling the corresponding axes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tft_torch.visualize.display_sample_wise_attention_scores">
+<span class="sig-prename descclassname"><span class="pre">tft_torch.visualize.</span></span><span class="sig-name descname"><span class="pre">display_sample_wise_attention_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attention_scores</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizons</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tft_torch.visualize.display_sample_wise_attention_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a utility function for displaying, on a single observation level,
+the attention scores output by the model, for, possibly, a multitude of horizons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attention_scores</strong> (<em>np.ndarray</em>) – A numpy array containing the attention scores for the relevant dataset.</p></li>
+<li><p><strong>observation_index</strong> (<em>int</em>) – The index with the dataset, corresponding to the observation for which the visualization will be generated.</p></li>
+<li><p><strong>horizons</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>List</em><em>[</em><em>int</em><em>]</em><em>]</em>) – A list or a single horizon, specified in time-steps units, for which the scores will be displayed.</p></li>
+<li><p><strong>unit</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The units associated with the time-steps. This variable is used for labeling the corresponding axes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tft_torch.visualize.display_sample_wise_selection_stats">
+<span class="sig-prename descclassname"><span class="pre">tft_torch.visualize.</span></span><span class="sig-name descname"><span class="pre">display_sample_wise_selection_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights_arr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">historical</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_stepwise</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tft_torch.visualize.display_sample_wise_selection_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a utility function for displaying, on a single observation level, the selection weights output by the
+model. This function can handle selection weights of both temporal input channels and static input channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weights_arr</strong> (<em>np.ndarray</em>) – A 2D or 3D array containing the selection weights output by the model. A 3D tensor will implies selection
+weights associated with temporal inputs.</p></li>
+<li><p><strong>observation_index</strong> (<em>int</em>) – The index with the dataset, corresponding to the observation for which the visualization will be generated.</p></li>
+<li><p><strong>feature_names</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of strings associated with the relevant attributes (according to the their order).</p></li>
+<li><p><strong>top_n</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – An integer specifying the quantity of the top weighted features to display.</p></li>
+<li><p><strong>title</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – A string which will be used when creating the title for the visualization.</p></li>
+<li><p><strong>historical</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Specifies whether the corresponding input channel contains historical data or future data. Relevant only for
+temporal input channels, and used for display purposes.</p></li>
+<li><p><strong>rank_stepwise</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Specifies whether to rank the features according to their weights, on each time-step separately, or simply
+display the raw selection weights output by the model. Relevant only for
+temporal input channels, and used for display purposes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="help.html" class="btn btn-neutral float-right" title="Help" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tft_torch.base_blocks.html" class="btn btn-neutral float-left" title="tft_torch.base_blocks module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Dvir Ben Or.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
