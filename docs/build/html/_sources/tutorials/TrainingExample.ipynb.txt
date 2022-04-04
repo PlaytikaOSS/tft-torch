@@ -15,7 +15,9 @@
     "\n",
     "The demonstration is using the processed version of [__*Corporación Favorita Grocery Sales Forecasting*__](https://www.kaggle.com/c/favorita-grocery-sales-forecasting/overview) dataset, as demonstrated in the __*Favorita Dataset Creation Example*__ tutorial, which is also part of this documentation.<br/>\n",
     "\n",
-    "The training routine implemented below, uses *pure* pytorch, for clarity purposes. However, it can be easily adapted to frameworks such as [__*pytorch-ignite*__](https://pytorch.org/ignite/index.html) or [__*pytorch-lightning*__](https://www.pytorchlightning.ai/) to facilitate, orchestrate, and automate some of the training procedure."
+    "The training routine implemented below, uses *pure* pytorch, for clarity purposes. However, it can be easily adapted to frameworks such as [__*pytorch-ignite*__](https://pytorch.org/ignite/index.html) or [__*pytorch-lightning*__](https://www.pytorchlightning.ai/) to facilitate, orchestrate, and automate some of the training procedure.\n",
+    "\n",
+    "For a comprehensive explanation of the model and its structure, refer to our [**blogpost**](https://www.playtika-blog.com/playtika-ai/multi-horizon-forecasting-using-temporal-fusion-transformers-a-comprehensive-overview-part-1/)."
    ]
   },
   {

@@ -21,4 +21,4 @@ the implemented model.
     imported in  ``Jupyter Notebook`` or ``Python`` projects.
 
 For more information, refer to our
-**blogpost** (link to follow soon).
+`blogpost <https://www.playtika-blog.com/playtika-ai/multi-horizon-forecasting-using-temporal-fusion-transformers-a-comprehensive-overview-part-1/>`_.

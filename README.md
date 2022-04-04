@@ -10,7 +10,7 @@ tft-torch
 [comment]: <> (Modify also LICENSE.rst if you change the license)
 ![alt text](https://img.shields.io/badge/build-passing-brightgreen)
 ![alt text](https://img.shields.io/badge/docs-passing-brightgreen)
-![alt text](https://img.shields.io/badge/version-0.0.3-blue)
+![alt text](https://img.shields.io/badge/version-0.0.4-blue)
 ![alt text](https://img.shields.io/badge/license-MIT-blue)
 
 **tft-torch** is a ``Python`` library that
@@ -41,7 +41,7 @@ how to use the library.
 Documentation
 -------------
 For more information, refer to our
-***blogpost*** (link to follow soon)
+[***blogpost***](https://www.playtika-blog.com/playtika-ai/multi-horizon-forecasting-using-temporal-fusion-transformers-a-comprehensive-overview-part-1/)
 and
 [complete documentation](https://playtikaresearch.github.io/tft-torch).
 
