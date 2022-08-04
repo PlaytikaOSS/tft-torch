@@ -1,3 +1,4 @@
+import torch
 from torch import nn
 
 
@@ -44,3 +45,12 @@ class TimeDistributed(nn.Module):
                 y = y.view(-1, x.size(1), y.size(-1))  # (time-steps, samples, output_size)
 
         return y
+
+
+class NullTransform(nn.Module):
+    def __init__(self):
+        super(NullTransform, self).__init__()
+
+    @staticmethod
+    def forward(empty_input: torch.tensor):
+        return []
