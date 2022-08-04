@@ -5,7 +5,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from omegaconf import DictConfig
-from tft_torch.base_blocks import TimeDistributed
+from tft_torch.base_blocks import TimeDistributed, NullTransform
 
 
 class GatedLinearUnit(nn.Module):
@@ -277,6 +277,13 @@ class InputChannelEmbedding(nn.Module):
         self.categorical_cardinalities = categorical_cardinalities
         self.time_distribute = time_distribute
 
+        if (num_numeric + num_categorical) < 1:
+            raise ValueError(f"""At least a single input variable (either numeric or categorical) should be included
+            as part of the input channel.
+            According to the provided configuration:
+            num_numeric + num_categorical = {num_numeric} + {num_categorical} = {num_numeric + num_categorical} < 1
+            """)
+
         if self.time_distribute:
             self.numeric_transform = TimeDistributed(
                 NumericInputTransformation(num_inputs=num_numeric, state_size=state_size), return_reshaped=False)
@@ -289,8 +296,15 @@ class InputChannelEmbedding(nn.Module):
                                                                         state_size=state_size,
                                                                         cardinalities=categorical_cardinalities)
 
+        # in case some input types are not expected there is no need in the type specific transformation.
+        # instead the "transformation" will return an empty list
+        if num_numeric == 0:
+            self.numeric_transform = NullTransform()
+        if num_categorical == 0:
+            self.categorical_transform = NullTransform()
+
     def forward(self, x_numeric, x_categorical) -> torch.tensor:
-        batch_shape = x_numeric.shape
+        batch_shape = x_numeric.shape if x_numeric.nelement() > 0 else x_categorical.shape
 
         processed_numeric = self.numeric_transform(x_numeric)
         processed_categorical = self.categorical_transform(x_categorical)
@@ -545,17 +559,22 @@ class TemporalFusionTransformer(nn.Module):
         # data props
         # ============
         data_props = config['data_props']
-        self.num_historical_numeric = data_props['num_historical_numeric']
-        self.num_historical_categorical = data_props['num_historical_categorical']
-        self.historical_categorical_cardinalities = data_props['historical_categorical_cardinalities']
+        self.num_historical_numeric = data_props.get('num_historical_numeric', 0)
+        self.num_historical_categorical = data_props.get('num_historical_categorical', 0)
+        self.historical_categorical_cardinalities = data_props.get('historical_categorical_cardinalities', [])
 
-        self.num_static_numeric = data_props['num_static_numeric']
-        self.num_static_categorical = data_props['num_static_categorical']
-        self.static_categorical_cardinalities = data_props['static_categorical_cardinalities']
+        self.num_static_numeric = data_props.get('num_static_numeric', 0)
+        self.num_static_categorical = data_props.get('num_static_categorical', 0)
+        self.static_categorical_cardinalities = data_props.get('static_categorical_cardinalities', [])
 
-        self.num_future_numeric = data_props['num_future_numeric']
-        self.num_future_categorical = data_props['num_future_categorical']
-        self.future_categorical_cardinalities = data_props['future_categorical_cardinalities']
+        self.num_future_numeric = data_props.get('num_future_numeric', 0)
+        self.num_future_categorical = data_props.get('num_future_categorical', 0)
+        self.future_categorical_cardinalities = data_props.get('future_categorical_cardinalities', [])
+
+        self.historical_ts_representative_key = 'historical_ts_numeric' if self.num_historical_numeric > 0 \
+            else 'historical_ts_categorical'
+        self.future_ts_representative_key = 'future_ts_numeric' if self.num_future_numeric > 0 \
+            else 'future_ts_categorical'
 
         # ============
         # model props
@@ -755,12 +774,15 @@ class TemporalFusionTransformer(nn.Module):
         (i.e. dim=1 for the static features, dim=2 for the temporal data).
 
         """
-        static_rep = self.static_transform(x_numeric=batch['static_feats_numeric'],
-                                           x_categorical=batch['static_feats_categorical'])
-        historical_ts_rep = self.historical_ts_transform(x_numeric=batch['historical_ts_numeric'],
-                                                         x_categorical=batch['historical_ts_categorical'])
-        future_ts_rep = self.future_ts_transform(x_numeric=batch['future_ts_numeric'],
-                                                 x_categorical=batch['future_ts_categorical'])
+        empty_tensor = torch.empty((0, 0))
+
+        static_rep = self.static_transform(x_numeric=batch.get('static_feats_numeric', empty_tensor),
+                                           x_categorical=batch.get('static_feats_categorical', empty_tensor))
+        historical_ts_rep = self.historical_ts_transform(x_numeric=batch.get('historical_ts_numeric', empty_tensor),
+                                                         x_categorical=batch.get('historical_ts_categorical',
+                                                                                 empty_tensor))
+        future_ts_rep = self.future_ts_transform(x_numeric=batch.get('future_ts_numeric', empty_tensor),
+                                                 x_categorical=batch.get('future_ts_categorical', empty_tensor))
         return future_ts_rep, historical_ts_rep, static_rep
 
     def get_static_encoders(self, selected_static: torch.tensor) -> Tuple[torch.tensor, ...]:
@@ -889,8 +911,8 @@ class TemporalFusionTransformer(nn.Module):
 
     def forward(self, batch):
         # infer batch structure
-        num_samples, num_historical_steps, _ = batch['historical_ts_numeric'].shape
-        num_future_steps = batch['future_ts_numeric'].shape[1]
+        num_samples, num_historical_steps, _ = batch[self.historical_ts_representative_key].shape
+        num_future_steps = batch[self.future_ts_representative_key].shape[1]
         # define output_sequence_length : num_future_steps - self.target_window_start_idx
 
         # =========== Transform all input channels ==============
