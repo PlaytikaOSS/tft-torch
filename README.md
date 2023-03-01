@@ -10,7 +10,7 @@ tft-torch
 [comment]: <> (Modify also LICENSE.rst if you change the license)
 ![alt text](https://img.shields.io/badge/build-passing-brightgreen)
 ![alt text](https://img.shields.io/badge/docs-passing-brightgreen)
-![alt text](https://img.shields.io/badge/version-0.0.5-blue)
+![alt text](https://img.shields.io/badge/version-0.0.6-blue)
 ![alt text](https://img.shields.io/badge/license-MIT-blue)
 
 **tft-torch** is a ``Python`` library that
@@ -29,12 +29,12 @@ $ pip install tft-torch
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The command above will automatically install all the required dependencies. Please visit the
-[installation](https://playtikaresearch.github.io/tft-torch/build/html/installation.html) page for more details.
+[installation](https://PlaytikaOSS.github.io/tft-torch/build/html/installation.html) page for more details.
 
 
 Getting started
 ---------------
-Check out the [tutorials](https://playtikaresearch.github.io/tft-torch/build/html/tutorials.html) for a demonstration
+Check out the [tutorials](https://PlaytikaOSS.github.io/tft-torch/build/html/tutorials.html) for a demonstration
 how to use the library.
 
 
@@ -43,7 +43,7 @@ Documentation
 For more information, refer to our
 [***blogpost***](https://www.playtika-blog.com/playtika-ai/multi-horizon-forecasting-using-temporal-fusion-transformers-a-comprehensive-overview-part-1/)
 and
-[complete documentation](https://playtikaresearch.github.io/tft-torch).
+[complete documentation](https://PlaytikaOSS.github.io/tft-torch).
 
 # Reference
 
@@ -69,10 +69,10 @@ part of the [Temporal_Fusion_Transform](https://github.com/mattsherar/Temporal_F
 Info for developers
 -------------------
 
-The source code of the project is available on [GitHub](https://github.com/PlaytikaResearch/tft-torch).
+The source code of the project is available on [GitHub](https://github.com/PlaytikaOSS/tft-torch).
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ git clone https://github.com/PlaytikaResearch/tft-torch.git
+$ git clone https://github.com/PlaytikaOSS/tft-torch.git
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can install the library and the dependencies with one of the following commands:
