@@ -259,48 +259,45 @@ class InputChannelEmbedding(nn.Module):
         The state size of the model, which determines the embedding dimension/width of each input variable.
     num_numeric : int
         The quantity of numeric input variables associated with the input channel.
-    num_categorical : int
-        The quantity of categorical input variables associated with the input channel.
     categorical_cardinalities: List[int]
         The quantity of categories associated with each of the categorical input variables.
     time_distribute: Optional[bool]
         A boolean indicating whether to wrap the composing transformations using the ``TimeDistributed`` module.
     """
 
-    def __init__(self, state_size: int, num_numeric: int, num_categorical: int, categorical_cardinalities: List[int],
+    def __init__(self, state_size: int, num_numeric: int, categorical_cardinalities: List[int],
                  time_distribute: Optional[bool] = False):
         super(InputChannelEmbedding, self).__init__()
 
         self.state_size = state_size
         self.num_numeric = num_numeric
-        self.num_categorical = num_categorical
+        self.num_categorical = len(categorical_cardinalities)
         self.categorical_cardinalities = categorical_cardinalities
         self.time_distribute = time_distribute
 
-        if (num_numeric + num_categorical) < 1:
+        if (num_numeric + self.num_categorical) < 1:
             raise ValueError(f"""At least a single input variable (either numeric or categorical) should be included
             as part of the input channel.
             According to the provided configuration:
-            num_numeric + num_categorical = {num_numeric} + {num_categorical} = {num_numeric + num_categorical} < 1
+            num_numeric + num_categorical = {num_numeric} + {self.num_categorical} = {num_numeric + num_categorical} < 1
             """)
 
         if self.time_distribute:
             self.numeric_transform = TimeDistributed(
                 NumericInputTransformation(num_inputs=num_numeric, state_size=state_size), return_reshaped=False)
             self.categorical_transform = TimeDistributed(
-                CategoricalInputTransformation(num_inputs=num_categorical, state_size=state_size,
+                CategoricalInputTransformation(state_size=state_size,
                                                cardinalities=categorical_cardinalities), return_reshaped=False)
         else:
             self.numeric_transform = NumericInputTransformation(num_inputs=num_numeric, state_size=state_size)
-            self.categorical_transform = CategoricalInputTransformation(num_inputs=num_categorical,
-                                                                        state_size=state_size,
+            self.categorical_transform = CategoricalInputTransformation(state_size=state_size,
                                                                         cardinalities=categorical_cardinalities)
 
         # in case some input types are not expected there is no need in the type specific transformation.
         # instead the "transformation" will return an empty list
         if num_numeric == 0:
             self.numeric_transform = NullTransform()
-        if num_categorical == 0:
+        if self.num_categorical == 0:
             self.categorical_transform = NullTransform()
 
     def forward(self, x_numeric, x_categorical) -> torch.tensor:
@@ -381,9 +378,9 @@ class CategoricalInputTransformation(nn.Module):
         The quantity of categories associated with each of the input variables.
     """
 
-    def __init__(self, num_inputs: int, state_size: int, cardinalities: List[int]):
+    def __init__(self, state_size: int, cardinalities: List[int]):
         super(CategoricalInputTransformation, self).__init__()
-        self.num_inputs = num_inputs
+        self.num_inputs = len(cardinalities)
         self.state_size = state_size
         self.cardinalities = cardinalities
 
@@ -560,16 +557,16 @@ class TemporalFusionTransformer(nn.Module):
         # ============
         data_props = config['data_props']
         self.num_historical_numeric = data_props.get('num_historical_numeric', 0)
-        self.num_historical_categorical = data_props.get('num_historical_categorical', 0)
         self.historical_categorical_cardinalities = data_props.get('historical_categorical_cardinalities', [])
+        self.num_historical_categorical = len(self.historical_categorical_cardinalities)
 
         self.num_static_numeric = data_props.get('num_static_numeric', 0)
-        self.num_static_categorical = data_props.get('num_static_categorical', 0)
         self.static_categorical_cardinalities = data_props.get('static_categorical_cardinalities', [])
+        self.num_static_categorical = len(self.static_categorical_cardinalities)
 
         self.num_future_numeric = data_props.get('num_future_numeric', 0)
-        self.num_future_categorical = data_props.get('num_future_categorical', 0)
         self.future_categorical_cardinalities = data_props.get('future_categorical_cardinalities', [])
+        self.num_future_categorical = len(self.future_categorical_cardinalities)
 
         self.historical_ts_representative_key = 'historical_ts_numeric' if self.num_historical_numeric > 0 \
             else 'historical_ts_categorical'
@@ -599,21 +596,18 @@ class TemporalFusionTransformer(nn.Module):
         # =====================
         self.static_transform = InputChannelEmbedding(state_size=self.state_size,
                                                       num_numeric=self.num_static_numeric,
-                                                      num_categorical=self.num_static_categorical,
                                                       categorical_cardinalities=self.static_categorical_cardinalities,
                                                       time_distribute=False)
 
         self.historical_ts_transform = InputChannelEmbedding(
             state_size=self.state_size,
             num_numeric=self.num_historical_numeric,
-            num_categorical=self.num_historical_categorical,
             categorical_cardinalities=self.historical_categorical_cardinalities,
             time_distribute=True)
 
         self.future_ts_transform = InputChannelEmbedding(
             state_size=self.state_size,
             num_numeric=self.num_future_numeric,
-            num_categorical=self.num_future_categorical,
             categorical_cardinalities=self.future_categorical_cardinalities,
             time_distribute=True)
 
