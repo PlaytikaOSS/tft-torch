@@ -473,7 +473,25 @@ class InterpretableMultiHeadAttention(nn.Module):
         # the last layer is used for final linear mapping (corresponds to W_H in the paper)
         self.out = nn.Linear(self.d_model, self.d_model)
 
-    def forward(self, q, k, v, mask=None):
+    def forward(self, q, k, v, mask=None, require_attention_scores: bool=False):
+        """
+        The forward pass of the InterpretableMultiHeadAttention module.
+        The function is designed to allow the module to return the attention scores if required.
+        If attention scores are not required, the function utilizes torch built in (faster) implemenation.
+        
+        Parameters
+        ----------
+        q: torch.tensor
+            The queries tensor.
+        k: torch.tensor
+            The keys tensor.
+        v: torch.tensor 
+            The values tensor.
+        mask: torch.tensor
+            The mask tensor.
+        require_attention_scores: bool
+            A boolean indicating whether to return the attention scores or not.
+        """
         num_samples = q.size(0)
 
         # Dimensions:
@@ -492,7 +510,11 @@ class InterpretableMultiHeadAttention(nn.Module):
         v_proj = v_proj.transpose(1, 2)  # (num_samples x num_total_steps x num_heads x state_size)
 
         # calculate attention using function we will define next
-        attn_outputs_all_heads, attn_scores_all_heads = self.attention(q_proj, k_proj, v_proj, mask)
+        if require_attention_scores:
+            attn_outputs_all_heads, attn_scores_all_heads = self.attention(q_proj, k_proj, v_proj, mask)
+        else:
+            attn_outputs_all_heads = torch.nn.functional.scaled_dot_product_attention(q_proj, k_proj, v_proj, mask)
+            attn_scores_all_heads = torch.zeros_like(attn_outputs_all_heads)
         # Dimensions:
         # attn_scores_all_heads: [num_samples x num_heads x num_future_steps x num_total_steps]
         # attn_outputs_all_heads: [num_samples x num_heads x num_future_steps x state_size]
@@ -875,7 +897,8 @@ class TemporalFusionTransformer(nn.Module):
 
     def apply_self_attention(self, enriched_sequence: torch.tensor,
                              num_historical_steps: int,
-                             num_future_steps: int):
+                             num_future_steps: int
+                             require_attention_scores: bool):
         # create a mask - so that future steps will be exposed (able to attend) only to preceding steps
         output_sequence_length = num_future_steps - self.target_window_start_idx
         mask = torch.cat([torch.zeros(output_sequence_length,
@@ -892,7 +915,8 @@ class TemporalFusionTransformer(nn.Module):
             q=enriched_sequence[:, (num_historical_steps + self.target_window_start_idx):, :],  # query
             k=enriched_sequence,  # keys
             v=enriched_sequence,  # values
-            mask=mask.bool())
+            mask=mask.bool(),
+            require_attention_scores)
         # Dimensions:
         # post_attention: [num_samples x num_future_steps x state_size]
         # attention_outputs: [num_samples x num_future_steps x state_size]
@@ -909,7 +933,7 @@ class TemporalFusionTransformer(nn.Module):
 
         return gated_post_attention, attention_scores
 
-    def forward(self, batch):
+    def forward(self, batch, require_attention_scores: bool=False):
         # infer batch structure
         num_samples, num_historical_steps, _ = batch[self.historical_ts_representative_key].shape
         num_future_steps = batch[self.future_ts_representative_key].shape[1]
@@ -967,7 +991,8 @@ class TemporalFusionTransformer(nn.Module):
         # =========== self-attention ==============
         gated_post_attention, attention_scores = self.apply_self_attention(enriched_sequence=enriched_sequence,
                                                                            num_historical_steps=num_historical_steps,
-                                                                           num_future_steps=num_future_steps)
+                                                                           num_future_steps=num_future_steps,
+                                                                           require_attention_scores=require_attention_scores)
         # Dimensions:
         # attention_scores: [num_samples x output_sequence_length x (num_historical_steps + num_future_steps)]
         # gated_post_attention: [num_samples x output_sequence_length x state_size]
